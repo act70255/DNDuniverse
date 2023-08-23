@@ -27,7 +27,7 @@ namespace DND.Domain.Service
                 creature.Experience.MaxValue = Convert.ToInt32(Math.Pow(creature.Level.Value, 0.5)) * 20;
                 creature.Experience.Value = 0;
             }
-            Terraria.Instance.Update(creature);
+            //Terraria.Instance.Update(creature);
             return creature;
         }
 
@@ -43,7 +43,7 @@ namespace DND.Domain.Service
             var newSkills = skills.Where(a => !creature.Skills.Contains(a));
 
             creature.Skills = creature.Skills.Concat(newSkills).Distinct().OrderBy(o => o).ToArray();
-            Terraria.Instance.Update(creature);
+            //Terraria.Instance.Update(creature);
             return creature;
         }
     }

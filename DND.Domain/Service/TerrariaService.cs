@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DND.Repository;
 using DND.Model.Entity;
+using DND.Repository.Interface;
+using MongoDB.Driver;
+using Microsoft.Extensions.Configuration;
 
 namespace DND.Domain.Service
 {
@@ -14,15 +17,19 @@ namespace DND.Domain.Service
     {
         IMapper _mapper;
         ICreatureService _creatureService;
-
-        public TerrariaService(ICreatureService creatureService, IMapper mapper)
+        ISkillRepository _skillRepository;
+        IConfiguration _configuration;
+        public TerrariaService(ICreatureService creatureService, IMapper mapper, IConfiguration configuration, ISkillRepository skillRepository)
         {
+            _skillRepository = skillRepository;
+            _configuration = configuration;
             _creatureService = creatureService;
             _mapper = mapper;
         }
 
         public IEnumerable<Creature> GetCreatures()
         {
+            var sks = _skillRepository.GetAll();
             return Terraria.Instance.Creatures;
         }
 
@@ -35,15 +42,15 @@ namespace DND.Domain.Service
         public Creature Spell(int skillID, int sourceID, int targetID)
         {
             var sourceCreature = Terraria.Instance.Creatures.FirstOrDefault(x => x.ID == sourceID);
-            if(sourceCreature ==null)
+            if (sourceCreature == null)
                 throw new Exception("Creature not found.");
             var targetCreature = Terraria.Instance.Creatures.FirstOrDefault(x => x.ID == targetID);
-            if(targetCreature ==null)
+            if (targetCreature == null)
                 throw new Exception("Creature not found.");
-            if(!sourceCreature.Skills.Contains(skillID))
+            if (!sourceCreature.Skills.Contains(skillID))
                 throw new Exception("Creature does not know this skill.");
             var effectSkill = SkillPool.Instance.Skills.FirstOrDefault(x => x.ID == skillID);
-            if(effectSkill == null)
+            if (effectSkill == null)
                 throw new Exception("Skill not found.");
 
             return Spell(effectSkill, sourceCreature, targetCreature);
@@ -73,7 +80,7 @@ namespace DND.Domain.Service
                     if (hurt > 0)
                         target.Health.Sub(hurt);
                 }
-                Terraria.Instance.Update(target);
+                //Terraria.Instance.Update(target);
                 if (target.Health.Value <= 0)
                 {
                     Console.WriteLine($"{target.Name} has died.");

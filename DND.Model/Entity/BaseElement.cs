@@ -33,7 +33,6 @@ namespace DND.Model.Entity
     public class BaseElement : BaseEntity
     {
         public virtual string Name { get; set; }
-        public virtual int ID { get; set; } = -1;
     }
 
     public class StatusValue : BaseElement

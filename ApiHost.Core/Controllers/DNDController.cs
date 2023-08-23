@@ -5,6 +5,7 @@ using DND.Model.ApiContent;
 using DND.Model.Entity;
 using DND.Repository;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson.IO;
 
 namespace ApiHost.Core.Controller
 {
@@ -12,10 +13,10 @@ namespace ApiHost.Core.Controller
     [Route("[controller]/[action]")]
     public class DNDController : ControllerBase
     {
-        ILogger<DNDController> _logger;
-        ITerrariaService _terrariaService;
-        ICreatureService _creatureService;
-        IMapper _mapper;
+        readonly ILogger<DNDController> _logger;
+        readonly ITerrariaService _terrariaService;
+        readonly ICreatureService _creatureService;
+        readonly IMapper _mapper;
 
         public DNDController(ILogger<DNDController> logger, ITerrariaService terrariaService, ICreatureService creatureService, IMapper mapper)
         {
@@ -26,8 +27,9 @@ namespace ApiHost.Core.Controller
         }
 
         [HttpPost(Name = "Data")]
-        public IActionResult Data([FromBody] dynamic queyr)
+        public IActionResult Data(object data)
         {
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(data));
             //_logger.Log("", queyr);
             return Ok(DateTime.Now.ToString());
         }

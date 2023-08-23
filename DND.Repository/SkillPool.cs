@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 
 namespace DND.Repository
 {
-    public sealed class SkillPool : BaseRepository
+    public sealed class SkillPool //: BaseRepository
     {
         private static readonly Lazy<SkillPool> lazy = new Lazy<SkillPool>(() => new SkillPool());
         public static SkillPool Instance { get { return lazy.Value; } }
 
-        public IEnumerable<Skill> Skills => GetList<Skill>();
+        public IEnumerable<Skill> Skills ;//=> GetList<Skill>();
 
         SkillPool()
         {
             var skillList = new List<Skill>();
-            InsertRange<Skill>(GeneratePhysicalSkills());
-            InsertRange<Skill>(GenerateFireSkills());
-            InsertRange<Skill>(GenerateWaterSkills());
-            InsertRange<Skill>(GenerateHealSkills());
+            //InsertRange<Skill>(GeneratePhysicalSkills());
+            //InsertRange<Skill>(GenerateFireSkills());
+            //InsertRange<Skill>(GenerateWaterSkills());
+            //InsertRange<Skill>(GenerateHealSkills());
+
             //SaveSkills(skillList);
             //Skills.AddRange(GenerateBuffSkills());
             //Skills.AddRange(GenerateDebuffSkills());

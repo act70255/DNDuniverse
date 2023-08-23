@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace DND.Model.Entity
 {
+    [BsonIgnoreExtraElements]
     public class Skill : StatusVolume
     {
         public Skill(int id, string name, ActionType action, ElementType element, EffectType effect, int manaCost, int staminaCost, int skillRange, bool isAOE, int aOERange, bool isEquipEffect, int value, int maxValue)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DND.Model.Entity
 {
+    [BsonIgnoreExtraElements]
     public class Creature : BaseElement
     {
         public Creature() { }

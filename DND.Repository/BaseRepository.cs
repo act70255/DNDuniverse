@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DND.Repository
 {
+    /*
     public class BaseRepository
     {
         public IEnumerable<T> GetList<T>()
@@ -63,4 +64,5 @@ namespace DND.Repository
             Save(list);
         }
     }
+    */
 }

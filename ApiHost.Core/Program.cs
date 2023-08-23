@@ -2,6 +2,7 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using Microsoft.Extensions.Hosting;
 using ApiHost.Core.Setup.Modules;
+using MongoDB.Driver;
 
 namespace ApiHost.Core
 {
@@ -15,18 +16,25 @@ namespace ApiHost.Core
             {
                 builder.RegisterModule(new ServiceModule());
                 builder.RegisterModule(new DND.Model.AutoMapperModule());
+                builder.RegisterModule(new DND.Repository.RepositoryModule());
                 builder.RegisterModule(new DND.Domain.ServiceModule());
             });
 
+            #region MongoDB
+            builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var mongoDbSettings = builder.Configuration.GetSection("MongoDB");
+            var mongoDbConnectionString = mongoDbSettings["ConnectionString"];
+            var mongoDbDatabaseName = mongoDbSettings["DatabaseName"];
+            builder.Services.AddSingleton<IMongoDatabase>(s => new MongoClient(mongoDbConnectionString).GetDatabase(mongoDbDatabaseName)); 
+            #endregion
+
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            //builder.Services.AddScoped<SampleService>();
-
+            builder.Services.AddHealthChecks();
 
             var app = builder.Build();
-
+            
             app.MapControllers();
 
             // Configure the HTTP request pipeline.
@@ -35,14 +43,10 @@ namespace ApiHost.Core
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            app.UseAuthorization();
-            app.MapControllers();
-
+            app.MapHealthChecks("/health");
+            app.UseAuthorization();            app.MapControllers();
             
-
             app.Run();
-            
         }
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DND.Model.Entity
+namespace DND.Repository.Interface
 {
-    public class BaseEntity
+    public interface IRepository<T>
     {
-        public virtual int ID { get; set; } = -1;
+
     }
 }
