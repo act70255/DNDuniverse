@@ -10,45 +10,45 @@ using System.Threading.Tasks;
 
 namespace DND.Repository.Implement
 {
-    public class Repository<T> : IRepository<T>
+    public class Repository<TDocument> : IRepository<TDocument>
     {
-        IMongoCollection<T> _collection;
+        IMongoCollection<TDocument> _collection;
         IMongoDatabase _mongoDB;
 
         public Repository(IMongoDatabase mongoDB)
         {
             _mongoDB = mongoDB;
-            _collection = _mongoDB.GetCollection<T>(typeof(T).Name);//..Collection<T>(dbName, typeof(T).Name);
+            _collection = _mongoDB.GetCollection<TDocument>(typeof(TDocument).Name);//..Collection<T>(dbName, typeof(T).Name);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<TDocument> GetAll()
         {
             return _collection.Find(_ => true).ToList();
         }
 
-        public T GetByID(int id)
+        public TDocument GetByID(int id)
         {
-            var filter = Builders<T>.Filter.Eq("ID", id);
+            var filter = Builders<TDocument>.Filter.Eq("ID", id);
             return _collection.Find(filter).FirstOrDefault();
         }
 
-        public void Insert(T entity)
+        public void Insert(TDocument entity)
         {
             _collection.InsertOne(entity);
         }
 
-        public void Update(T entity)
+        public void Update(TDocument entity)
         {
             if (entity is BaseEntity baseEntity)
             {
-                var filter = Builders<T>.Filter.Eq("ID", baseEntity.ID);
+                var filter = Builders<TDocument>.Filter.Eq("ID", baseEntity.ID);
                 _collection.ReplaceOne(filter, entity);
             }
         }
 
         public void Delete(int id)
         {
-            var filter = Builders<T>.Filter.Eq("ID", id);
+            var filter = Builders<TDocument>.Filter.Eq("ID", id);
             _collection.DeleteOne(filter);
         }
     }

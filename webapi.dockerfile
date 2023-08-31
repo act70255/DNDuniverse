@@ -1,7 +1,7 @@
 # Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 COPY pub/ /root/
-WORKDIR /app
+WORKDIR /root/
 
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./

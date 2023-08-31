@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,9 @@ namespace DND.Model.ApiContent
     }
     public class SkillsRequest : BaseApiContent
     {
+        [DefaultValue(-1)]
         public int ID { get; set; }
-        public List<int> IDs { get; set; }
+        public List<int> IDs { get; set; } = new List<int>();
     }
 
     public class CreatureRequest : BaseApiContent

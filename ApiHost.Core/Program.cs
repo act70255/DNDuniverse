@@ -44,7 +44,8 @@ namespace ApiHost.Core
                 app.UseSwaggerUI();
             }
             app.MapHealthChecks("/health");
-            app.UseAuthorization();            app.MapControllers();
+            app.UseAuthorization();
+            app.MapControllers();
             
             app.Run();
         }

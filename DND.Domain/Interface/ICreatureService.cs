@@ -10,6 +10,5 @@ namespace DND.Domain.Service.Interface
     public interface ICreatureService
     {
         Creature AddSkills(int creatureID, int[] skillIDs);
-        Creature AddExperience(int sourceID, int value);
     }
 }

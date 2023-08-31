@@ -10,15 +10,13 @@ namespace ApiHost.Core.Setup.Modules
 
             var dataAccess = System.Reflection.Assembly.GetExecutingAssembly();
 
-            builder.RegisterAssemblyTypes(dataAccess)
-                .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
+            //builder.RegisterAssemblyTypes(dataAccess)
+            //    .Where(t => t.Name.EndsWith("Service"))
+            //    .AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(dataAccess)
             .Where(t => t.Name.EndsWith("Controller"))
             .AsImplementedInterfaces();
-
-            
         }
     }
 }
