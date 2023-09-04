@@ -1,4 +1,5 @@
 ﻿using DND.Model.Entity;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace DND.Repository.Interface
         Creature NewCreature(Creature creature);
         IEnumerable<Creature> GetAllCreatures();
         Creature GetByID(int id);
-        Creature UpdateCreature(Creature creature);
+        //Creature UpdateCreature(Creature creature);
+        UpdateResult UpdateCreature(FilterDefinition<Creature> filterDefinition, UpdateDefinition<Creature> updateDefinition);
     }
 }

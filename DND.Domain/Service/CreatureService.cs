@@ -10,6 +10,7 @@ using DND.Domain.Service.Interface;
 using DND.Repository;
 using DND.Model.Entity;
 using DND.Repository.Interface;
+using MongoDB.Driver;
 
 namespace DND.Domain.Service
 {
@@ -36,7 +37,10 @@ namespace DND.Domain.Service
 
             creature.Skills = creature.Skills.Concat(newSkills).Distinct().OrderBy(o => o).ToArray();
 
-            return _terrariaRepository.UpdateCreature(creature);
+            var filter = Builders<Creature>.Filter.Eq("ID", creature.ID);
+            var update = Builders<Creature>.Update.Set("Health", creature.Health);
+            var result = _terrariaRepository.UpdateCreature(filter, update);
+            return creature;
         }
     }
 }

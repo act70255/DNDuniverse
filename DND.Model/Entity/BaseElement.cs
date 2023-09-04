@@ -68,7 +68,6 @@ namespace DND.Model.Entity
             }
             return result;
         }
-        public bool CheckAdd(int value) => Value + value <= MaxValue;
         public int Sub(int value)
         {
             var result = Value - value;

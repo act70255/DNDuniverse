@@ -4,6 +4,7 @@ using DND.Repository.Interface;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace DND.Repository.Implement
     {
         IMongoCollection<Creature> _creatureCollection;
         IMongoDatabase _mongoDB;
+        Stopwatch _stopwatch;
         public TerrariaRepository(IMongoDatabase mongoDB) : base(mongoDB)
         {
             _mongoDB = mongoDB;
@@ -43,10 +45,12 @@ namespace DND.Repository.Implement
             return _creatureCollection.Find(f => f.ID == id).FirstOrDefault();
         }
 
-        public Creature UpdateCreature(Creature creature)
+        public UpdateResult UpdateCreature(FilterDefinition<Creature> filterDefinition,UpdateDefinition<Creature> updateDefinition)
         {
-            _creatureCollection.ReplaceOne(f => f.ID == creature.ID, creature);
-            return creature;
+            _stopwatch.Restart();
+            var result = _creatureCollection.UpdateOne(filterDefinition,updateDefinition);
+            Debug.WriteLine($"UpdateCreature: {_stopwatch.ElapsedMilliseconds}ms");
+            return result;
         }
     }
 }

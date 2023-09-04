@@ -16,7 +16,7 @@ namespace DND.Repository
             builder.RegisterAssemblyTypes(dataAccess)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+                .InstancePerDependency();
         }
     }
 }

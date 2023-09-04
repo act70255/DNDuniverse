@@ -22,10 +22,12 @@ namespace DND.Model.ApiContent
 
     public class CreatureRequest : BaseApiContent
     {
-        public CreatureRequest() { }
-        public CreatureRequest(string name, int healthValue = 10, int manaValue = 10, int staminaValue = 10, int experienceValue = 10, int levelValue = 10, int armorClassValue = 10, int attackBonusValue = 10, int damageValue = 10, int strengthValue = 10, int dexterityValue = 10, int intelligenceValue = 10, int charismaValue = 10, params int[] skills)
+        public CreatureRequest(string name = "", int healthValue = 10, int manaValue = 10, int staminaValue = 10, int experienceValue = 10, int levelValue = 10, int armorClassValue = 10, int attackBonusValue = 10, int damageValue = 10, int strengthValue = 10, int dexterityValue = 10, int intelligenceValue = 10, int charismaValue = 10, params int[] skills)
         {
-            Name = name;
+            if (!string.IsNullOrEmpty(name))
+            {
+                Name = name;
+            }
             HealthValue = healthValue;
             ManaValue = manaValue;
             StaminaValue = staminaValue;

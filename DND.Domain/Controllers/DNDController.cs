@@ -33,7 +33,6 @@ namespace DND.Domain.Controller
         [HttpPost(Name = "~/Data")]
         public IActionResult Data([FromBody] dynamic queyr)
         {
-            //_logger.Log("", queyr);
             return Ok(DateTime.Now.ToString());
         }
 
@@ -42,6 +41,7 @@ namespace DND.Domain.Controller
         {
             try
             {
+                //_logger.LogInformation("GetCreatures");
                 var resultData = _terrariaService.GetCreatures();
                 return resultData == null ? NotFound() : Ok(_mapper.Map<IEnumerable<CreatureRequest>>(resultData));
             }
@@ -56,20 +56,14 @@ namespace DND.Domain.Controller
         {
             try
             {
-                object result = null;
-                if (request != null)
-                    result = _terrariaService.AddCreature(_mapper.Map<Creature>(request));
-                else
-                    result = _terrariaService.AddCreature(_mapper.Map<Creature>(new CreatureRequest()));
-
-                return Ok(result);
+                return Ok(_terrariaService.AddCreature(_mapper.Map<Creature>(request)));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
+        
         [HttpPost(Name = "~/Action")]
         public ActionResult<CreatureRequest> Action(ActionRequest request)
         {
@@ -84,7 +78,7 @@ namespace DND.Domain.Controller
                 return BadRequest(ex.Message);
             }
         }
-
+        
         [HttpPost(Name = "~/GetSkills")]
         public ActionResult<IEnumerable<Skill>> GetSkills(SkillsRequest request)
         {
@@ -100,7 +94,7 @@ namespace DND.Domain.Controller
                 return BadRequest(ex.Message);
             }
         }
-
+        
         [HttpPost(Name = "~/AddSKills")]
         public ActionResult<Creature> AddSKills(SkillsRequest request)
         {
