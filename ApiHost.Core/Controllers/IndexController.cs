@@ -26,7 +26,7 @@ namespace ApiHost.Core.Controller
         [HttpPost(Name = "Data")]
         public IActionResult Data(object data)
         {
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(data));
+            Console.WriteLine(data.ToString());
             return Ok(DateTime.Now);
         }
 
